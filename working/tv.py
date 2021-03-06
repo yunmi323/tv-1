@@ -7,9 +7,14 @@ chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument('--user-agent="Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/535.46 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25"')
 driver = webdriver.Chrome('/usr/bin/chromedriver', options=chrome_options)
-url_home = "http://m.iptv345.com/iptv.php?tid=gt"
-driver.get(url_home)
-ac = driver.find_element_by_link_text('TVB翡翠台')
+try:
+  url_home = "http://m.iptv345.com/iptv.php?tid=gt"
+  driver.get(url_home)
+  ac = driver.find_element_by_link_text('TVB翡翠台')
+except:
+  url_home = "http://m.iptv222.com/iptv.php?tid=gt"
+  driver.get(url_home)
+  ac = driver.find_element_by_link_text('TVB翡翠台')
 ActionChains(driver).move_to_element(ac).click(ac).perform()
 subpage = BeautifulSoup(driver.page_source, 'html.parser')
 tvb = subpage.video.attrs['src']
