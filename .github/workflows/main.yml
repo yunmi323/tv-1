@@ -1,12 +1,13 @@
 name: TVcrawl
 
 on:
-  push:
-    branches: 
-      - main
-  schedule:
-    - cron: '30 3 * * *'
-    - cron: '15 10 * * *'
+  #push:
+   # branches: 
+     # - main
+  workflow_dispatch:
+  #schedule:
+  #  - cron: '30 3 * * *'
+   # - cron: '15 10 * * *'
     
 jobs:
 
