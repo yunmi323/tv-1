@@ -17,9 +17,9 @@ jobs:
       # 下载 SWF 文件
       - name: Download SWF file
         run: |
-          # 从 GitHub 下载原始文件，需要替换 blob 为 raw
-          url="${{ github.event.inputs.swf_url/\/blob\//\/raw\/ }}"
-          wget -O downloaded.swf "$url"
+          url="${{ github.event.inputs.swf_url }}"
+          raw_url="${url/blob/raw}"
+          wget -O downloaded.swf "$raw_url"
 
       # 安装必要的软件
       - name: Install dependencies
