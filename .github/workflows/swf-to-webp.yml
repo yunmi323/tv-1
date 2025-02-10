@@ -30,8 +30,9 @@ jobs:
       # 转换 SWF 到 WebP
       - name: Convert SWF to WebP
         run: |
-          # 使用 renderswf 渲染 SWF 为 PNG
-          renderswf -o output.png downloaded.swf
+          # 使用 mplayer 渲染 SWF 为 PNG
+          mplayer -vo png:outdir=. downloaded.swf -frames 1
+          mv 00000001.png output.png
           cwebp output.png -o output.webp
 
       # 上传 WebP 文件作为工件
