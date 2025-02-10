@@ -1,0 +1,41 @@
+name: Convert Remote SWF to WebP
+
+# 允许手动触发工作流
+on:
+  workflow_dispatch:
+    inputs:
+      swf_url:
+        description: 'URL of the SWF file'
+        required: true
+        default: 'https://github.com/sxwnl/sxwnl/blob/main/src/%E5%AF%BF%E6%98%9F%E6%97%A5%E6%9C%88%E9%A3%9F.swf'
+
+jobs:
+  convert-swf-to-webp:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 下载 SWF 文件
+      - name: Download SWF file
+        run: |
+          # 从 GitHub 下载原始文件，需要替换 blob 为 raw
+          url="${{ github.event.inputs.swf_url/\/blob\//\/raw\/ }}"
+          wget -O downloaded.swf "$url"
+
+      # 安装必要的软件
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y swftools webp
+
+      # 转换 SWF 到 WebP
+      - name: Convert SWF to WebP
+        run: |
+          swfrender -o output.png downloaded.swf
+          cwebp output.png -o output.webp
+
+      # 上传 WebP 文件作为工件
+      - name: Upload WebP file
+        uses: actions/upload-artifact@v4
+        with:
+          name: webp-output
+          path: output.webp
