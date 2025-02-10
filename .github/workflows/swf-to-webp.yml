@@ -25,12 +25,13 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y swftools webp
+          sudo apt-get install -y mplayer webp
 
       # 转换 SWF 到 WebP
       - name: Convert SWF to WebP
         run: |
-          swfrender -o output.png downloaded.swf
+          # 使用 renderswf 渲染 SWF 为 PNG
+          renderswf -o output.png downloaded.swf
           cwebp output.png -o output.webp
 
       # 上传 WebP 文件作为工件
